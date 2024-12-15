@@ -1,0 +1,94 @@
+{{!-- All code is based on the CS 340 starter code:
+Date: 11/19/2024
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main  --}}
+
+<!-- shipmentContainers.hbs -->
+<title>Shipment Containers</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{!-- Adding for trying to use jQuery to send a delete request --}}
+
+
+<h1>Shipment Containers</h1>
+[  <a href="/">Home</a> | <a href="/customers">Customers</a> | <a href="/products">Products</a> | <a href="orders">Orders</a> | <a href="robots">Robots</a> | Shipment Containers | <a href="ordersProducts">Orders/Products</a> ]
+
+<h3>Browse Shipment Containers</h3>
+<button class="btn" onclick="showInsert()">Add New Container</button>
+<button class="btn" onclick="showUpdate()">Update a Container</button>
+
+{{!-- Add Form --}}
+<div id="insert" style="display: none">
+    <form id="add-container-ajax">
+        <h3>Add a New Shipment Container</h3>
+        <p>To add a new container, please enter the information below and click 'Submit'.</p>
+        <label for="input-isFilled">Is Filled: </label>
+        <select name="input-isFilled" id="input-isFilled" required>
+            <option value="">Select</option>
+            <option value="1">Filled</option>
+            <option value="0">Not Filled</option>
+        </select>
+
+        <label for="input-location">Location (x-coordinate, y-coordinate): </label>
+        <input type="text" name="input-location" id="input-location" placeholder="x, y" pattern="^\s*\d+\s*,\s*\d+\s*$" title="Enter coordinates as 'x, y' (e.g., 10, 10)" required>
+
+        <input type="submit">
+        <button id="cancel-btn-add" class="btn" type="button" value="Cancel" onClick="showBrowse()">Cancel</button>
+    </form>
+</div>
+<script src="./js/add_container.js"></script>
+
+{{!-- Update Form --}}
+<div id="update" style="display: none">
+    <form id="update-container-form-ajax">
+        <h3>Update a Shipment Container</h3>
+        <p>Select a container and update its information below.</p>
+        <label for="select-container">Container ID: </label>
+        <select name="select-container" id="mySelect" required>
+            <option value="">Select a Container</option>
+            {{#each data}}
+            <option value="{{this.containerID}}">{{this.containerID}}</option>
+            {{/each}}
+        </select>
+
+        <label for="update-isFilled">Is Filled: </label>
+        <select name="update-isFilled" id="update-isFilled" required>
+            <option value="">Select</option>
+            <option value="1">Filled</option>
+            <option value="0">Not Filled</option>
+        </select>
+
+        <label for="update-location">Location (x-coordinate, y-coordinate): </label>
+        <input type="text" name="update-location" id="update-location" placeholder="x, y" pattern="^\s*\d+\s*,\s*\d+\s*$" title="Enter coordinates as 'x, y' (e.g., 10, 10)"required>
+
+        <input type="submit">
+        <button id="cancel-btn-update" class="btn" type="button" value="Cancel" onClick="showBrowse()">Cancel</button>
+    </form>
+</div>
+<script src="./js/update_container.js"></script>
+
+<div id="browse" style="display: block">
+    {{!-- Table for Shipment Containers --}}
+    <table id="shipment-container-table">
+        <thead>
+            <tr>
+                <th>Container ID</th>
+                <th>Is Filled</th>
+                <th>Location (x,y)</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr data-value={{this.containerID}}>
+                <td>{{this.containerID}}</td>
+                {{!--<td>{{this.isFilled}}</td>--}}
+                <td>{{#if this.isFilled}}Filled{{else}}Not filled{{/if}}</td>
+                <td>{{this.location}}</td>
+                <td><button onclick="deleteContainer({{this.containerID}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script src="./js/delete_container.js"></script>

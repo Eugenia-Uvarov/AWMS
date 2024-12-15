@@ -1,0 +1,131 @@
+{{!-- All code is based on the CS 340 starter code:
+Date: 11/19/2024
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main  --}}
+
+<!-- products.hbs -->
+<title>Orders/Products</title><link rel="stylesheet" href="css/style.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{!-- Adding for trying to use jQuery to send a delete request --}}
+
+
+<h1>Orders/Products</h1>
+[ <a href="/">Home</a> | <a href="/customers">Customers</a> | <a href="/products">Products</a> | <a href="/orders">Orders</a> | <a href="/robots">Robots</a> | <a href="/shipmentContainers">Shipment Containers</a> | Orders/Products ]
+
+<h3>Browse Products in Order</h3>
+<button class="btn" onclick="showInsert()">Add a New Product to Order</button>  <button  class="btn" onclick=showUpdate()>Update Order/Product</button>
+
+{{!-- Form to add a record to the table  --}}
+<div id="insert" style="display: none">
+<form id="add-product-to-order-ajax"> 
+    <h3>Add a Product to Order</h3>
+    <p>To add a new product to order, please enter their information below and click 'Submit'</p>
+      
+    <label for="mySelectProductOrder">Order ID: </label>
+    <select name="mySelectProductOrder" id="mySelectProductOrder" required>
+        <option value="">Select an Order ID</option>
+        {{#each orders}}
+        <option value="{{this.orderID}}">{{this.orderID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="mySelectProductName">Product Name: </label>
+    <select name="mySelectProductName" id="mySelectProductName" required>
+        <option value="">Select a Product Name</option>
+        {{#each products}}
+        <option value="{{this.productID}}">{{this.productID}} - {{this.name}}</option>
+        {{/each}}
+    </select>
+      
+    <label for="quantity">Quantity:</label> 
+    <input input type="number" name="quantity" id="quantity" required>
+
+    <input type="submit">
+    <button id="cancel-btn-add" class="btn" type="button" value="Cancel" onClick="showBrowse()">Cancel</button>
+</form>
+</div> <!-- insert -->
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_product_to_order.js"></script>
+
+{{!-- Form to update the ordersProduct --}}
+<div id="update" style="display: none">
+<form id="update-product-quantity-form-ajax">
+<h3>Edit Products in Orders</h3>
+<p>Select an Order Product ID to update:</p>
+    <label for="mySelectProductOrderUpdate">Order Product ID: </label>
+    <select name="mySelectProductOrderUpdate" id="mySelectProductOrderUpdate" required>
+        <option value="">Select</option>
+        {{#each data}}
+        <option value="{{this.orderProductID}}">{{this.orderProductID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="mySelectOrderIDUpdate">Order ID:</label> 
+    <select name="mySelectOrderIDUpdate" id="mySelectOrderIDUpdate" required>
+        <option value="">Select</option>
+        {{#each orders}}
+        <option value="{{this.orderID}}">{{this.orderID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="mySelectProductIDUpdate">Product ID:</label> 
+    <select name="mySelectProductIDUpdate" id="mySelectProductIDUpdate" required>
+        <option value="">Select</option>
+        {{#each products}}
+        <option value="{{this.productID}}">{{this.productID}} - {{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="update-quantity">Quantity:</label> 
+    <input type="number" name="update-quantity" id = "update-quantity" placeholder="Enter quantity" required>
+
+    <input type="submit">
+    <button  id="cancel-btn-update" type="button" value="Cancel" onClick="showBrowse()">Cancel</button>
+
+</form>
+</div>
+<script src="./js/update_order_product.js"></script>
+
+<div id="browse" style="display: block">
+<table id="order-product-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            <th>OrderProduct ID</th>
+            <th>Order ID</th>
+            <th>Product ID</th>
+            <th>Quantity</th>
+            <th>Delete</th>            
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value={{this.orderProductID}}>
+            <td>{{this.orderProductID}}</td>
+            <td>{{this.orderID}}</td>
+            <td>{{this.productID}} - {{this.productName}}</td>
+            <td>{{this.quantity}}</td>            
+            <td><button onclick="deleteOrderProduct({{this.orderProductID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+  </table>
+</div> <!-- browse -->
+<script src="./js/delete_product_from_order.js"></script>
+
+<!-- /views/robots.hbs -->
+
+
+
+
+
+
+
+  

@@ -1,0 +1,115 @@
+{{!-- All code is based on the CS 340 starter code:
+Date: 11/19/2024
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main  --}}
+
+<!-- products.hbs -->
+<title>Products</title><link rel="stylesheet" href="css/style.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{!-- Adding for trying to use jQuery to send a delete request --}}
+
+
+<h1>Products</h1>
+
+[  <a href="/">Home</a> | <a href="/customers">Customers</a> | Products | <a href="/orders">Orders</a> | <a href="/robots">Robots</a> | <a href="/shipmentContainers">Shipment Containers</a> | <a href="/ordersProducts">Orders/Products</a> ]
+
+{{!-- Create a table --}}
+<h3>Browse Products</h3>
+<button class="btn" onclick="showInsert()">Add a New Product</button>  
+<button class="btn" onclick="showUpdate()">Update a Product</button>
+
+<!-- Add Product Form -->
+<div id="insert" style="display: none">
+    <form id="add-product-form-ajax">
+        <h3>Add a New Product</h3>
+        <label for="input-name">Name:</label>
+        <input type="text" name="input-name" id="input-name" placeholder="Enter product name" required>
+
+        <label for="input-description">Description:</label>
+        <input type="text" name="input-description" id="input-description" placeholder="Enter product description" required>
+
+        <label for="input-price">Price:</label>
+        <input type="number" name="input-price" id="input-price" step="0.01" placeholder="Enter product price" required>
+
+        <label for="input-stock">Stock Level:</label>
+        <input type="number" name="input-stock" id="input-stock" placeholder="Enter stock level" required>
+
+        <label for="input-location">Product Location:</label>
+        <input type="text" name="input-location" id="input-location" placeholder="x, y" pattern="^\s*\d+\s*,\s*\d+\s*$" title="Enter coordinates as 'x, y' (e.g., 10, 10)" required>
+
+        <input type="submit">
+        <button id="cancel-btn-add" class="btn" type="button" value="Cancel" onClick="showBrowse()">Cancel</button>
+    </form>
+</div>
+
+<script src="./js/add_product.js"></script>
+
+<!-- Update Product Form -->
+<div id="update" style="display: none">
+    <form id="update-product-form-ajax">
+        <h3>Update a Product</h3>
+        <p>To update a product, select it from the drop-down menu below:</p>
+
+        <label for="mySelectProduct">Select Product:</label>
+        <select name="input-product" id="mySelectProduct" required>
+            <option value="">Select a Product</option>
+            {{#each data}}
+            <option value="{{this.productID}}">{{this.productID}} - {{this.name}}</option>
+            {{/each}}
+        </select>
+
+        <label for="input-name-update">Name:</label>
+        <input type="text" name="input-name-update" id="input-name-update" placeholder="Enter new name" required>
+
+        <label for="input-description-update">Description:</label>
+        <input type="text" name="input-description-update" id="input-description-update" placeholder="Enter new description" required>
+
+        <label for="input-price-update">Price:</label>
+        <input type="number" name="input-price-update" id="input-price-update" step="0.01" placeholder="Enter new price" required>
+
+        <label for="input-stockLevel-update">Stock Level:</label>
+        <input type="number" name="input-stockLevel-update" id="input-stockLevel-update" placeholder="Enter new stock level" required>
+
+        <label for="input-location-update">Product Location:</label>
+        <input type="text" name="input-location-update" id="input-location-update" placeholder="x, y" pattern="^\s*\d+\s*,\s*\d+\s*$" title="Enter coordinates as 'x, y' (e.g., 10, 10)" required>
+
+        <input type="submit">
+        <button id="cancel-btn-update" class="btn" type="button" value="Cancel" onClick="showBrowse()">Cancel</button>
+    </form>
+</div>
+
+<script src="./js/update_product.js"></script>
+
+<!-- Browse Section -->
+<div id="browse" style="display: block">
+    <table id="product-table">
+        <!-- Header section -->
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock Level</th>
+                <th>Product Location (x, y)</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <!-- Body section -->
+        <tbody>
+            {{#each data}}
+            <tr data-value="{{this.productID}}">
+                <td>{{this.productID}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.stockLevel}}</td>
+                <td>{{this.productLocation}}</td>
+                <td><button onclick="deleteProduct({{this.productID}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script src="./js/delete_product.js"></script>

@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background */
+}
+
+h1 {
+    color: #333;
+    text-align: center; /* Center the heading */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Remove spacing between table cells */
+    margin-bottom: 20px; /* Space below the table */
+
+    
+}
+
+th{
+    padding: 10px;
+}
+
+
+td, th {
+
+    text-align: left; /* Align text to the left */
+    border: 1px solid #ddd; /* Light border for cells */
+}
+
+th {
+    background-color: #154b84; /* Blue background for headers */
+    color: white; /* White text for headers */
+}
+
+a {
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+form, .about {
+    margin: 20px 0; /* Margin around the container */
+    padding: 20px; /* Padding inside the container */
+    background-color: #f9f9f9; /* White background for containers */
+    border-radius: 5px; /* Slightly rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.fields {
+    margin-bottom: 20px; /* Space below fields */
+}
+
+label {
+    display: block; /* Block-level label */
+    margin-bottom: 10px; /* Space below label */
+    margin-top: 20px; /* Space above label */
+    font-weight: bold; /* Bold text for labels */
+}
+
+legend {
+    padding: 20px 20px 20px 10px;
+}
+
+textarea {
+    font-family: Arial, sans-serif;
+}
+
+textarea,
+select,
+input[type="textarea"],
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"] {
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    width: 100%; /* Full width */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+input[type="submit"],
+button
+{
+    background-color: #000000; /* Blue button color */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 15px; /* Padding for buttons */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    margin-top: 15px;
+    margin: 10px;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover,
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    
+}
+
+.btn,
+input[type="submit"]{
+    margin: 10px 10px 10px 0;
+}
+
+
+

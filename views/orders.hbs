@@ -1,0 +1,165 @@
+{{!-- All code is based on the CS 340 starter code:
+Date: 11/19/2024
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main  --}}
+
+<!-- orders.hbs -->
+<title>Orders</title><link rel="stylesheet" href="css/style.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{!-- Adding for trying to use jQuery to send a delete request --}}
+
+
+<h1>Orders</h1>
+[ <a href="/">Home</a> | <a href="/customers">Customers</a> | <a href="/products">Products</a> | Orders | <a href="/robots">Robots</a> | <a href="/shipmentContainers">Shipment Containers</a> | <a href="/ordersProducts">Orders/Products</a> ]
+
+<h3>Browse Orders</h3>
+<button class="btn" onclick="showInsert()">Add a New Order</button>  <button  class="btn" onclick=showUpdate()>Update an Order</button>
+{{!-- Create a table --}}
+<div id="browse" style="display: block">
+
+{{!-- Form to add a record to the table  --}}
+<div id="insert" style="display: none">
+<form id="add-order-ajax"> 
+    <h3>Add a New Order</h3>
+    <p>To add a new order, please enter information below and click 'Submit'</p>
+    <label for="input-id">Customer ID/Name: </label>
+    <select name="input-id" id="mySelectCustomer" required>
+        <option value="">Select a Customer</option>
+        {{#each customers}}
+        <option value="{{this.customerID}}">{{this.customerID}} - {{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-date">Date: </label>
+    <input type="date" name="input-date" id="input-date" required>
+    
+    <label for="input-robot">Robot ID: </label>
+    <select name="input-robot" id="mySelectRobot">
+        <option value="">Robot not assigned</option>
+        {{#each robots}}
+        <option value="{{this.robotID}}">{{this.robotID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-container">Container ID: </label>
+    <select name="input-container" id="mySelectContainer" required>
+        <option value="">Select a Container</option>
+        {{#each shipmentContainers}}
+        <option value="{{this.containerID}}">{{this.containerID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-shipping-status">Shipping Status:</label>
+      <select name="input-shipping-status" id="input-shipping-status" required>
+        <option value="pending">pending</option>
+        <option value="in_transit">in_transit</option>
+        <option value="delivered">delivered</option>
+      </select>
+
+    <input type="submit">
+    <button id="cancel-btn-add" class="btn" type="button" value="Cancel" onClick="showBrowse()">Cancel</button>
+</form>
+</div> <!-- insert -->
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_order.js"></script>
+
+
+{{!-- Form to update the order --}}
+<div id="update" style="display: none">
+<form id="update-order-form-ajax">
+<h3>Update an Order</h3>
+<p>To update an order select the order ID from the drop-down menu</p>
+    <!-- Order ID dropdown menu -->
+    <label for="mySelectOrder">Order ID: </label>
+    <select name="mySelectOrder" id="mySelectOrder" required>
+        <option value="">Select an Order ID</option>
+        {{#each data}}
+        <option value="{{this.orderID}}">{{this.orderID}}</option>
+        {{/each}}
+    </select>
+
+    <!-- Customer ID dropdown menu -->
+    <label for="mySelectCustomerUpdate">Customer ID/Name: </label>
+    <select name="mySelectCustomerUpdate" id="mySelectCustomerUpdate" required>
+        <option value="">Select a Customer</option>
+        {{#each customers}}
+        <option value="{{this.customerID}}">{{this.customerID}} - {{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <!-- Date Field -->
+    <label for="input-date-update">Date: </label>
+    <input type="date" name="input-date-update" id="input-date-update" required>
+    
+    <!-- Robot ID dropdown menu -->
+    <label for="mySelectRobotUpdate">Robot ID: </label>
+    <select name="mySelectRobotUpdate" id="mySelectRobotUpdate">
+        <option value="">Robot not assigned</option>
+        {{#each robots}}
+        <option value="{{this.robotID}}">{{this.robotID}}</option>
+        {{/each}}
+    </select>
+
+    <!-- Container ID dropdown menu -->
+    <label for="update-container">Container ID: </label>
+    <select name="update-container" id="mySelectContainerUpdate" required>
+        <option value="">Select a Container</option>
+        {{#each shipmentContainers}}
+        <option value="{{this.containerID}}">{{this.containerID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-shipping-status-update">Shipping Status:</label>
+      <select name="input-shipping-status-update" id="input-shipping-status-update" required>
+        <option value="pending">pending</option>
+        <option value="in_transit">in_transit</option>
+        <option value="delivered">delivered</option>
+      </select>
+
+    <input type="submit">
+    <button  id="cancel-btn-update" type="button" value="Cancel" onClick="showBrowse()">Cancel</button>
+
+</form>
+</div>
+<script src="./js/update_order.js"></script>
+
+<table id="order-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Order Date</th>
+            <th>Robot ID</th>
+            <th>Container ID</th>
+            <th>Shipping Status</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, customerID, orderDate, roborID, containerID and shippingStatus, in order --}}
+        {{#each data}}
+        <tr data-value={{this.orderID}}>
+            <td>{{this.orderID}}</td>          
+            <td>{{this.customerID}}</td>
+            <td>{{this.formatted_order_date}}</td>
+            <td>{{this.robotID}}</td>
+            <td>{{this.containerID}}</td>
+            <td>{{this.shippingStatus}}</td>
+            <td><button onclick="deleteOrder({{this.orderID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div> <!-- browse -->
+<script src="./js/delete_order.js"></script>
+
+<!-- /views/order.hbs -->
+
+

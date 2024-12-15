@@ -1,0 +1,25 @@
+{
+  "name": "awms",
+  "version": "1.0.0",
+  "description": "Autonomous Warehouse Management System CS340",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cjb00000/AWMS.git"
+  },
+  "author": "Christian Buckheit and Eugenia Uvarov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cjb00000/AWMS/issues"
+  },
+  "homepage": "https://github.com/Cjb00000/AWMS#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
+    "forever": "^4.0.3",
+    "mysql": "^2.18.1"
+  }
+}
